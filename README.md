@@ -1,4 +1,4 @@
-# SmartTools Suite
+# UtilSuite - Smart Tools
 
 21 free, browser-based tools built with Next.js (App Router) and Tailwind CSS v4.
 
@@ -16,7 +16,7 @@ Copy `.env.example` to `.env.local` (or add them in Vercel → Settings → Envi
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Your real domain, e.g. `https://www.smarttools.com` (sitemap, canonical URLs, Open Graph) |
+| `NEXT_PUBLIC_SITE_URL` | Your real domain, e.g. `https://utilsuite.app` (sitemap, canonical URLs, Open Graph) |
 | `NEXT_PUBLIC_ADSENSE_CLIENT` | AdSense publisher ID `ca-pub-XXXXXXXXXXXXXXXX` (after approval) |
 | `NEXT_PUBLIC_ADSLOT_TOP / INLINE / SIDEBAR / BOTTOM / HOME` | Ad unit slot IDs |
 | `NEXT_PUBLIC_GA_ID` | Optional Google Analytics `G-XXXXXXXXXX` |

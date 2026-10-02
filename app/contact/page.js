@@ -14,7 +14,7 @@ export default function Contact() {
       <p className="mt-4 text-lg leading-relaxed text-muted">Questions, bug reports or a tool you’d like to see? Send us an email and we’ll get back to you.</p>
       <div className="panel mt-8">
         <p className="label">Email</p>
-        <a href={`mailto:${SITE.email}`} className="break-all font-display text-2xl font-bold text-brand hover:underline">{SITE.email}</a>
+        <a href={`mailto:${SITE.contactEmail}`} className="break-all font-display text-2xl font-bold text-brand hover:underline">{SITE.contactEmail}</a>
         <p className="mt-4 text-sm text-muted">We usually reply within 24–48 hours. Please don’t send sensitive documents — our tools work without them.</p>
       </div>
       <div className="mt-6 text-sm text-muted">

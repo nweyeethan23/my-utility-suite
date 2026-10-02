@@ -1,2 +1,0 @@
-# Replace with your own line once AdSense approves you (publisher ID WITHOUT "ca-"):
-# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

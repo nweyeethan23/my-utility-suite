@@ -25,7 +25,7 @@ export default function JsonFormatterClient() {
     <div className="space-y-5">
       <div>
         <label htmlFor="src" className="label">Input JSON</label>
-        <textarea id="src" className="textarea !min-h-52" spellCheck={false} placeholder='{"name":"SmartTools","tools":21}' value={src} onChange={(e) => { setSrc(e.target.value); setMsg({ ok: null, text: '' }); }} />
+        <textarea id="src" className="textarea !min-h-52" spellCheck={false} placeholder='{"name":"UtilSuite - Smart Tools","tools":21}' value={src} onChange={(e) => { setSrc(e.target.value); setMsg({ ok: null, text: '' }); }} />
       </div>
       <div className="flex flex-wrap items-center gap-2">
         <button className="btn" onClick={() => run('format')}>Format</button>

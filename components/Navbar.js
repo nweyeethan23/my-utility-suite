@@ -8,7 +8,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/" className="flex items-center gap-2 font-display text-xl font-extrabold text-ink" aria-label={`${SITE.name} home`}>
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand text-lg text-white">⚙</span>
-          SmartTools<span className="text-brand">Suite</span>
+          UtilSuite -<span className="text-brand">Smart Tools</span>
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">

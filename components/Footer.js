@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid gap-10 md:grid-cols-[1.2fr_3fr]">
           <div>
-            <p className="font-display text-2xl font-extrabold text-white">SmartTools<span className="text-signal">Suite</span></p>
+            <p className="font-display text-2xl font-extrabold text-white">UtilSuite -<span className="text-signal">Smart Tools</span></p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed">{SITE.tagline}. Your files and text are processed on your device and never uploaded.</p>
           </div>
           <nav aria-label="All tools" className="grid grid-cols-2 gap-8 sm:grid-cols-3">
