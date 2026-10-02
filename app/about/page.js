@@ -20,7 +20,7 @@ export default function About() {
 
       <div className="mt-10 grid gap-5 md:grid-cols-3">
         {[
-          ['Private by design', 'PDF, image and text tools run inside your browser. Your files are never uploaded to our servers.'],
+          ['Private by design', 'Our PDF, image and text processing is designed to run inside your browser. Files processed by these tools are not uploaded to our servers.'],
           ['Free without a catch', 'No account, no watermark and no daily limit. Advertising helps us cover hosting.'],
           ['Built for every screen', 'Every tool works on phones, tablets and desktops without installing anything.'],
         ].map(([t, d]) => (

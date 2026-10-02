@@ -21,7 +21,7 @@ export default function Privacy() {
 
       <h2>1. Local Processing & Zero File Storage</h2>
       <p>
-        All utility tools—including PDF editing, image conversion, text formatting, and calculation tools—run completely client-side in your web browser. Files you drop or text you enter are <b>never uploaded to or stored on our servers</b>. All session data is immediately cleared when you close or refresh the page.
+        Most utility processing—including PDF operations, image conversion, text formatting, and calculations—runs client-side in your web browser. Files and text used by those tools are not uploaded to or stored on our servers. Some features, such as exchange-rate lookups, request current data from an external rate provider.
       </p>
 
       <h2>2. Information We Collect</h2>
@@ -30,7 +30,10 @@ export default function Privacy() {
           <b>Local Tool Inputs:</b> Processed entirely on your machine. We cannot view, access, or log your tool inputs or uploaded documents.
         </li>
         <li>
-          <b>Anonymous Analytics:</b> We may collect aggregate, anonymized technical metrics (such as visited pages, device type, and general geographic region) solely to monitor platform health and optimize performance.
+          <b>Analytics:</b> If analytics is enabled, we may collect usage and technical information such as pages visited, device/browser information and approximate location to understand site performance and improve the service.
+        </li>
+        <li>
+          <b>Advertising:</b> If advertising is enabled, Google and its advertising partners may use cookies or similar technologies to serve, measure and personalize ads in accordance with their applicable policies and your available consent or privacy choices.
         </li>
         <li>
           <b>Direct Inquiries:</b> If you reach out to our team by email, we retain your email address and message contents solely to answer your questions.
@@ -44,7 +47,7 @@ export default function Privacy() {
 
       <h2>4. Data Security</h2>
       <p>
-        We apply industry-standard security safeguards. Because your processing actions stay on your local hardware and we operate without database accounts or passwords, your personal information is fundamentally protected.
+        We use reasonable technical and organisational safeguards. Local processing reduces the need to send files to our servers, but no website or internet connection can be guaranteed to be completely secure.
       </p>
 
       <h2>5. Children’s Privacy</h2>

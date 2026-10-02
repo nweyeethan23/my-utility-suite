@@ -55,8 +55,26 @@ export default function Home() {
           a live currency converter, a word counter, calculators for BMI, age and loan EMI, and developer helpers like a JSON formatter and QR code generator.
         </p>
         <p className="mt-3">
-          Because processing happens locally in your browser, your documents and photos are not sent to a server. That keeps sensitive files private and makes
-          results appear instantly, even on a slow connection.
+          Most file and text processing happens locally in your browser, so documents, photos and text are not uploaded to UtilSuite.
+          This also means performance depends on your device and browser, especially for large files.
+        </p>
+        <h2 className="mt-10">Choose a tool category</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          {CATEGORIES.map((category) => (
+            <Link
+              key={category.id}
+              href={category.path}
+              className="panel !p-5 transition hover:-translate-y-0.5 hover:border-brand"
+            >
+              <span className="text-2xl" aria-hidden="true">{category.icon}</span>
+              <h3 className="mt-2 font-display text-xl font-bold">{category.title}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-muted">{category.description}</p>
+            </Link>
+          ))}
+        </div>
+        <p className="mt-8 text-sm text-muted">
+          Some tools use external data sources. For example, exchange rates are fetched from a rate provider and are
+          informational rather than a guaranteed transaction rate. See each tool's notes and our Privacy Policy for details.
         </p>
         <h2 className="mt-10">Frequently asked questions</h2>
         <div className="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
