@@ -23,10 +23,17 @@ async function buildTool(a, b) {
   const base = TOOL_BY_ID['exchange-rate'];
   const [na, nb] = [currencyName(a), currencyName(b)];
   let rateText = `Use the live converter above for today’s ${a} to ${b} rate.`;
+
   try {
-    const { rates } = await fetchRates(a);
-    if (rates[b]) rateText = `At the latest update, 1 ${a} equals ${rates[b].toFixed(4)} ${b}.`;
-  } catch { /* fall back to the generic sentence */ }
+    const res = await fetchRates(a);
+    const rateValue = res?.rates ? Number(res.rates[b]) : null;
+    if (Number.isFinite(rateValue) && rateValue > 0) {
+      rateText = `At the latest update, 1 ${a} equals ${rateValue.toFixed(4)} ${b}.`;
+    }
+  } catch {
+    /* Fall back to the generic sentence if fetch fails at build time */
+  }
+
   return {
     ...base,
     path: `/exchange-rate/${a.toLowerCase()}-to-${b.toLowerCase()}`,
@@ -46,17 +53,20 @@ async function buildTool(a, b) {
 }
 
 export async function generateMetadata({ params }) {
-  const p = parse((await params).pair);
+  const resolvedParams = await params;
+  const p = parse(resolvedParams?.pair);
   if (!p) return {};
   return toolMetadata(await buildTool(...p));
 }
 
 export default async function PairPage({ params }) {
-  const p = parse((await params).pair);
+  const resolvedParams = await params;
+  const p = parse(resolvedParams?.pair);
   if (!p) notFound();
   const [a, b] = p;
   const tool = await buildTool(a, b);
   const reverse = PAIRS.some(([x, y]) => x === b && y === a);
+
   return (
     <ToolShell tool={tool}>
       <ExchangeRateClient initialFrom={a} initialTo={b} />
