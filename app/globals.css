@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f2f6f3;
+  --color-ink: #0f2a22;
+  --color-brand: #0b7a5e;
+  --color-brand-dark: #085c47;
+  --color-signal: #ffc833;
+  --color-line: #d8e2dc;
+  --color-muted: #566a62;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 3px solid var(--color-signal); outline-offset: 2px; border-radius: 6px; }
+summary::-webkit-details-marker { display: none; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* ── surfaces ─────────────────────────────── */
+.panel { @apply rounded-3xl border border-line bg-white p-5 md:p-8; box-shadow: 0 14px 34px -22px rgba(15, 42, 34, .35); }
+.chip { display: grid; place-items: center; flex: none; width: 3rem; height: 3rem; border-radius: 1rem; font-size: 1.5rem;
+  background: color-mix(in srgb, var(--accent, #0b7a5e) 15%, white); }
+.chip-sm { width: 2.25rem; height: 2.25rem; font-size: 1.1rem; border-radius: .75rem; }
+
+/* ── form controls ────────────────────────── */
+.label { @apply mb-1.5 block text-sm font-semibold text-ink; }
+.input, .select, .textarea { @apply w-full rounded-xl border-2 border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors; }
+.input:focus, .select:focus, .textarea:focus { border-color: var(--color-brand); }
+.textarea { @apply min-h-40 resize-y font-mono text-sm leading-relaxed; }
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-6 py-3.5 font-display text-base font-bold text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50; }
+.btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-line bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand; }
+.btn-signal { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-signal px-6 py-3.5 font-display text-base font-bold text-ink transition-colors hover:brightness-95; }
+.result { @apply rounded-2xl bg-ink p-6 text-white; }
+.result small { @apply block text-sm font-medium text-white/70; }
+.result strong { @apply mt-1 block break-words font-display text-4xl font-bold text-signal; }
+.stat { @apply rounded-2xl border border-line bg-paper p-4; }
+.stat b { @apply block font-display text-2xl font-bold text-ink; }
+.stat span { @apply text-sm text-muted; }
+.notice { @apply rounded-xl border border-line bg-paper px-4 py-3 text-sm text-muted; }
+.error { @apply rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700; }
+
+.dropzone { @apply flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-line bg-paper px-6 py-10 text-center transition-colors hover:border-brand; }
+.dropzone.is-active { @apply border-brand bg-emerald-50; }
+
+/* ── article blocks ───────────────────────── */
+.doc h2 { @apply font-display text-2xl font-bold tracking-tight text-ink; }
+.doc p, .doc li { @apply leading-relaxed text-muted; }
+.doc .steps { counter-reset: s; @apply mt-4 space-y-3; }
+.doc .steps li { counter-increment: s; @apply relative rounded-2xl border border-line bg-white py-4 pr-4 pl-14 text-ink; }
+.doc .steps li::before { content: counter(s); @apply absolute top-3.5 left-4 grid h-7 w-7 place-items-center rounded-full bg-brand text-sm font-bold text-white; }
+.doc .ticks { @apply mt-4 space-y-2; }
+.doc .ticks li { @apply relative pl-7 text-ink; }
+.doc .ticks li::before { content: "✓"; @apply absolute left-0 font-bold text-brand; }
+
+.crumbs { @apply flex flex-wrap items-center gap-2 text-sm text-muted; }
+.crumbs a { @apply font-medium text-brand hover:underline; }
+
+/* long-form legal / about pages */
+.legal h2 { @apply mt-10 mb-3 font-display text-2xl font-bold; }
+.legal p, .legal li { @apply leading-relaxed text-muted; }
+.legal p + p { @apply mt-3; }
+.legal ul { @apply mt-3 list-disc space-y-1.5 pl-6; }
+.legal a { @apply font-semibold text-brand underline; }
+
+/* ── AdSense ──────────────────────────────── */
+.ad-wrap { @apply relative block w-full overflow-hidden text-center; }
+.ad-label { @apply mb-1 block text-[11px] tracking-wide text-muted/70; }
+.ad-placeholder { @apply grid w-full place-items-center rounded-2xl border-2 border-dashed border-line bg-white/60 text-xs font-medium text-muted; }
