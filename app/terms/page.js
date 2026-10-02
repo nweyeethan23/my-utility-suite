@@ -9,6 +9,8 @@ export const metadata = pageMetadata({
 });
 
 export default function Terms() {
+  const contactEmail = SITE.contactEmail || SITE.email || 'utilsuite79@gmail.com';
+
   return (
     <article className="legal mx-auto max-w-3xl">
       <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl">Terms of Use</h1>
@@ -30,14 +32,14 @@ export default function Terms() {
       <h2>5. Limitation of liability</h2>
       <p>To the fullest extent permitted by law, {SITE.name} is not liable for any loss or damage arising from use of the site or its tools, including data loss or decisions made from calculator results.</p>
 
-      <h2>6. Advertising and third parties</h2>
-      <p>The site shows ads from Google AdSense and may link to third-party sites. We don’t control them. See our <Link href="/privacy-policy">Privacy Policy</Link>.</p>
+      <h2>6. Third-party content and links</h2>
+      <p>The site may display third-party content or include links to external websites and services. We do not control and are not responsible for third-party practices, content, or availability. For data details, see our <Link href="/privacy-policy" className="underline hover:text-brand">Privacy Policy</Link>.</p>
 
       <h2>7. Changes</h2>
       <p>We may update these terms and the tools at any time. Continued use means you accept the updated terms.</p>
 
       <h2>8. Contact</h2>
-      <p>Questions about these terms? <Link href="/contact">Contact us</Link> at {SITE.email}.</p>
+      <p>Questions about these terms? <Link href="/contact" className="underline hover:text-brand">Contact us</Link> or email <a href={`mailto:${contactEmail}`} className="underline hover:text-brand">{contactEmail}</a>.</p>
     </article>
   );
 }

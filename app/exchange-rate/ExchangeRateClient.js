@@ -57,8 +57,11 @@ export default function ExchangeRateClient({ initialFrom = 'USD', initialTo = 'T
 
       <div className="result" aria-live="polite">
         <small>{amount || 0} {from} =</small>
-        <strong>{loading && !data ? 'Loading…' : result != null ? `${fmt(result, 4)} ${to}` : '—'}</strong>
-        {rate && <small className="mt-2">1 {from} = {rate.toFixed(4)} {to}{data.updated ? ` · updated ${new Date(data.updated).toLocaleDateString()}` : ''}</small>}
+        <strong>{loading && !data ? 'Loading rates…' : result != null ? `${fmt(result, 4)} ${to}` : error ? 'Rate unavailable' : '—'}</strong>
+        <small className="mt-2">
+  1 {from} = {rate.toFixed(4)} {to}
+  {data.updated ? ` · provider updated ${new Date(data.updated).toLocaleString()}` : ' · live provider rate'}
+</small>
       </div>
 
       {rate && (
