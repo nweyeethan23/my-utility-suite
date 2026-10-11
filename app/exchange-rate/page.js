@@ -19,7 +19,7 @@ export default function Page() {
       <div className="mt-8 border-t border-line pt-6">
         <h2 className="font-display text-xl font-bold">Popular currency pairs</h2>
         <div className="mt-3 flex flex-wrap gap-2">
-          {PAIRS.slice(0, 24).map(([a, b]) => (
+          {PAIRS.map(([a, b]) => (
             <Link key={a + b} href={`/exchange-rate/${a.toLowerCase()}-to-${b.toLowerCase()}`} className="btn-ghost !py-1.5">{a} to {b}</Link>
           ))}
         </div>

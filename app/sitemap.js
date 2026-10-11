@@ -2,23 +2,21 @@ import { SITE } from '@/lib/site';
 import { TOOLS, CATEGORIES } from '@/lib/tools';
 import { PAIRS } from '@/lib/currency';
 
+// Google ignores <priority> and <changefreq>, and trusts <lastmod> only when it is accurate,
+// so only real modification dates are published. Update SITE.updated in lib/site.js when content changes.
 export default function sitemap() {
-  const now = SITE.updated ? new Date(SITE.updated) : new Date();
-  const u = (path, priority, changeFrequency = 'monthly') => ({
-    url: `${SITE.url}${path}`,
-    lastModified: now,
-    changeFrequency,
-    priority,
-  });
+  const content = new Date(SITE.updated);
+  const legal = new Date(SITE.legalUpdated || SITE.updated);
+  const u = (path, lastModified = content) => ({ url: `${SITE.url}${path}`, lastModified });
 
   return [
-    u('/', 1, 'weekly'),
-    ...CATEGORIES.map((c) => u(c.path, 0.8)),
-    ...TOOLS.map((t) => u(t.path, 0.9)),
-    ...PAIRS.map(([a, b]) => u(`/exchange-rate/${a.toLowerCase()}-to-${b.toLowerCase()}`, 0.6, 'daily')),
-    u('/about', 0.4, 'yearly'),
-    u('/contact', 0.4, 'yearly'),
-    u('/privacy-policy', 0.3, 'yearly'),
-    u('/terms', 0.3, 'yearly'),
+    u('/'),
+    ...CATEGORIES.map((c) => u(c.path)),
+    ...TOOLS.map((t) => u(t.path)),
+    ...PAIRS.map(([a, b]) => u(`/exchange-rate/${a.toLowerCase()}-to-${b.toLowerCase()}`)),
+    u('/about', legal),
+    u('/contact', legal),
+    u('/privacy-policy', legal),
+    u('/terms', legal),
   ];
 }

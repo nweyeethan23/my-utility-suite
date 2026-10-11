@@ -4,7 +4,7 @@ import ToolShell from '@/components/ToolShell';
 import ExchangeRateClient from '../ExchangeRateClient';
 import { TOOL_BY_ID } from '@/lib/tools';
 import { toolMetadata } from '@/lib/seo';
-import { PAIRS, currencyName, fetchRates } from '@/lib/currency';
+import { PAIRS, CURRENCY_INFO, currencyName, fetchRates, formatRate, formatAmount } from '@/lib/currency';
 
 export const revalidate = 3600;
 export const dynamicParams = false;
@@ -23,19 +23,52 @@ async function buildTool(a, b) {
   const base = TOOL_BY_ID['exchange-rate'];
   const [na, nb] = [currencyName(a), currencyName(b)];
   let rateText = `Use the live converter above for today’s ${a} to ${b} rate.`;
+  let rateValue = null;
 
   try {
     const res = await fetchRates(a);
-    const rateValue = res?.rates ? Number(res.rates[b]) : null;
-    if (Number.isFinite(rateValue) && rateValue > 0) {
-      rateText = `At the latest update, 1 ${a} equals ${rateValue.toFixed(4)} ${b}.`;
+    const r = res?.rates ? Number(res.rates[b]) : null;
+    if (Number.isFinite(r) && r > 0) {
+      rateValue = r;
+      rateText = `At the latest update, 1 ${a} equals ${formatRate(r)} ${b}.`;
     }
   } catch {
     /* Fall back to the generic sentence if fetch fails at build time */
   }
 
+  const ia = CURRENCY_INFO[a] || {};
+  const ib = CURRENCY_INFO[b] || {};
+  const sections = [];
+  let table = null;
+
+  if (rateValue) {
+    const inv = 1 / rateValue;
+    sections.push({
+      h: `${a} to ${b} exchange rate today`,
+      p: [
+        `${rateText} Going the other way, 1 ${b} is worth about ${formatRate(inv)} ${a}. These are mid-market rates from our rate provider, refreshed about once an hour, so they are a good guide for budgeting and price checks but not a guaranteed quote.`,
+        `A quick way to estimate by hand: multiply any ${a} amount by ${formatRate(rateValue)} to get ${b}, or divide a ${b} amount by the same number to get ${a}. For example, 250 ${a} is about ${formatAmount(250 * rateValue)} ${b}, and 1,000 ${b} is about ${formatAmount(1000 * inv)} ${a}.`,
+      ],
+    });
+    table = {
+      title: `Common ${b} amounts converted to ${a}`,
+      head: [b, a],
+      rows: [10, 100, 500, 1000, 5000, 10000, 50000].map((n) => [formatAmount(n), formatAmount(n * inv)]),
+    };
+  }
+
+  sections.push({
+    h: `About the ${na} and the ${nb}`,
+    p: [
+      `The ${na} (${a}, symbol ${ia.symbol || a}) is the currency of ${ia.region || a}, issued under the authority of ${ia.bank || 'its central bank'}. The ${nb} (${b}, symbol ${ib.symbol || b}) is the currency of ${ib.region || b}, overseen by ${ib.bank || 'its central bank'}.`,
+      `The ${a}/${b} rate moves with interest-rate decisions in both economies, inflation, trade flows and investor sentiment. Banks, cards and transfer services usually apply a margin on top of the mid-market rate, so compare the amount that actually arrives rather than the headline rate. Use the conversion table above to check common ${a} amounts, and the swap button to reverse the direction.`,
+    ],
+  });
+
   return {
     ...base,
+    sections,
+    table,
     path: `/exchange-rate/${a.toLowerCase()}-to-${b.toLowerCase()}`,
     name: `${a} to ${b} Converter`,
     title: `${a} to ${b} Converter – ${na} to ${nb}`,
@@ -66,6 +99,9 @@ export default async function PairPage({ params }) {
   const [a, b] = p;
   const tool = await buildTool(a, b);
   const reverse = PAIRS.some(([x, y]) => x === b && y === a);
+  const pairHref = (x, y) => `/exchange-rate/${x.toLowerCase()}-to-${y.toLowerCase()}`;
+  const sameFrom = PAIRS.filter(([x, y]) => x === a && y !== b).slice(0, 12);
+  const sameTo = PAIRS.filter(([x, y]) => y === b && x !== a).slice(0, 12);
 
   return (
     <ToolShell tool={tool}>
@@ -74,6 +110,26 @@ export default async function PairPage({ params }) {
         {reverse && <Link className="btn-ghost" href={`/exchange-rate/${b.toLowerCase()}-to-${a.toLowerCase()}`}>{b} to {a}</Link>}
         <Link className="btn-ghost" href="/exchange-rate">All currencies</Link>
       </div>
+      {(sameFrom.length > 0 || sameTo.length > 0) && (
+        <div className="mt-6 space-y-4">
+          {sameFrom.length > 0 && (
+            <div>
+              <h2 className="font-display text-lg font-bold">More {a} conversions</h2>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {sameFrom.map(([x, y]) => <Link key={x + y} className="btn-ghost !py-1.5" href={pairHref(x, y)}>{x} to {y}</Link>)}
+              </div>
+            </div>
+          )}
+          {sameTo.length > 0 && (
+            <div>
+              <h2 className="font-display text-lg font-bold">Convert to {b}</h2>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {sameTo.map(([x, y]) => <Link key={x + y} className="btn-ghost !py-1.5" href={pairHref(x, y)}>{x} to {y}</Link>)}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </ToolShell>
   );
 }
