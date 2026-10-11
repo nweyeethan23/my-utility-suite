@@ -8,6 +8,7 @@ import { SITE } from '@/lib/site';
 import { siteJsonLd } from '@/lib/seo';
 import { ADSENSE_CLIENT } from '@/lib/ads';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const display = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-bricolage', display: 'swap' });
 const body = Figtree({ subsets: ['latin'], variable: '--font-figtree', display: 'swap' });
@@ -72,8 +73,9 @@ export default function RootLayout({ children }) {
             </Script>
           </>
         )}
+        <Analytics />
+        <SpeedInsights />
       </body>
-      <Analytics />
     </html>
   );
 }
