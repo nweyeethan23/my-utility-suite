@@ -65,6 +65,41 @@ export default function ToolShell({ tool, children }) {
             </ol>
           </section>
 
+          {(tool.sections || []).length > 0 && (
+            <section className="doc mt-10" aria-label={`${tool.name} guide`}>
+              {tool.sections.map((sec) => (
+                <div key={sec.h} className="doc-block">
+                  <h2>{sec.h}</h2>
+                  {(sec.p || []).map((para, i) => <p key={i} className="mt-3">{para}</p>)}
+                  {sec.list && (
+                    <ul className="ticks">
+                      {sec.list.map((li) => <li key={li}>{li}</li>)}
+                    </ul>
+                  )}
+                  {sec.formula && <p className="formula" role="math">{sec.formula}</p>}
+                  {(sec.after || []).map((para, i) => <p key={`a${i}`} className="mt-3">{para}</p>)}
+                </div>
+              ))}
+              {tool.table && (
+                <div className="doc-block">
+                  <h2>{tool.table.title}</h2>
+                  <div className="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>{tool.table.head.map((h, i) => <th key={`${i}-${h}`} scope="col">{h}</th>)}</tr>
+                      </thead>
+                      <tbody>
+                        {tool.table.rows.map((row, r) => (
+                          <tr key={r}>{row.map((cell, c) => <td key={c}>{cell}</td>)}</tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+
           <section className="doc mt-10">
             <h2>Key features and practical uses</h2>
             <ul className="ticks">
@@ -93,8 +128,8 @@ export default function ToolShell({ tool, children }) {
           <section className="doc mt-10" aria-labelledby="faq">
             <h2 id="faq">Frequently asked questions</h2>
             <div className="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
-              {tool.faqs.map(([q, a]) => (
-                <details key={q} className="group p-5">
+              {tool.faqs.map(([q, a], i) => (
+                <details key={`${i}-${q}`} className="group p-5">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink">
                     {q}
                     <span className="text-brand transition-transform group-open:rotate-45 text-2xl leading-none" aria-hidden="true">+</span>

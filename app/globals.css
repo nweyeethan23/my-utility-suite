@@ -54,6 +54,15 @@ summary::-webkit-details-marker { display: none; }
 .doc .ticks li { @apply relative pl-7 text-ink; }
 .doc .ticks li::before { content: "✓"; @apply absolute left-0 font-bold text-brand; }
 
+/* long-form tool content: tables and formulas */
+.doc .doc-block + .doc-block { @apply mt-10; }
+.doc .formula { @apply mt-4 overflow-x-auto rounded-2xl border border-line bg-paper px-5 py-4 font-mono text-base font-semibold text-ink; }
+.doc .table-wrap { @apply mt-4 overflow-x-auto rounded-2xl border border-line bg-white; }
+.doc table { @apply w-full border-collapse text-left text-sm; }
+.doc th { @apply bg-paper px-4 py-3 font-semibold text-ink; }
+.doc td { @apply border-t border-line px-4 py-3 text-muted; }
+.doc td:first-child { @apply font-medium text-ink; }
+
 .crumbs { @apply flex flex-wrap items-center gap-2 text-sm text-muted; }
 .crumbs a { @apply font-medium text-brand hover:underline; }
 
