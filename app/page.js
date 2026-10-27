@@ -18,6 +18,7 @@ const FAQ = [
 ];
 
 const slim = TOOLS.map(({ id, path, cat, icon, name, short, keywords }) => ({ id, path, cat, icon, name, short, keywords }));
+const rates = [['THB','USD'],['USD','THB'],['THB','MMK'],['MMK','THB'],['USD','MMK'],['THB','LAK'],['USD','LAK'],['EUR','THB']];
 const popular = ['pdf-merger', 'image-compressor', 'qr-code-generator', 'exchange-rate', 'word-counter', 'bmi-calculator'];
 
 export default function Home() {
@@ -45,6 +46,17 @@ export default function Home() {
       </section>
 
       <ToolBrowser tools={slim} categories={CATEGORIES} />
+
+      <section className="mt-12 max-w-3xl" aria-labelledby="rates-h">
+        <h2 id="rates-h" className="font-display text-2xl font-bold">Live exchange rates</h2>
+        <p className="mt-1 text-sm text-muted">Baht, kyat, kip, dollar and euro — updated hourly.</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {rates.map(([a, b]) => (
+            <Link key={a + b} href={`/exchange-rate/${a.toLowerCase()}-to-${b.toLowerCase()}`} className="btn-ghost !py-1.5">{a} to {b}</Link>
+          ))}
+          <Link href="/exchange-rate" className="btn-ghost !py-1.5">All currencies</Link>
+        </div>
+      </section>
 
       <AdSlot position="home" className="my-12" />
 

@@ -45,6 +45,13 @@ export default function ToolShell({ tool, children }) {
             {children}
           </section>
 
+          <div className="mt-6 lg:hidden">
+            <h2 className="font-display text-lg font-bold">Try another free tool</h2>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {related.map((r) => <Link key={r.id} href={r.path} className="btn-ghost !py-1.5">{r.icon} {r.name}</Link>)}
+            </div>
+          </div>
+
           <AdSlot position="inline" className="my-8" />
 
           <section className="doc mt-10">
