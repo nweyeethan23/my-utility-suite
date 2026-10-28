@@ -40,6 +40,7 @@ async function buildTool(a, b) {
   const ib = CURRENCY_INFO[b] || {};
   const sections = [];
   let table = null;
+  let table2 = null;
 
   if (rateValue) {
     const inv = 1 / rateValue;
@@ -50,8 +51,14 @@ async function buildTool(a, b) {
         `A quick way to estimate by hand: multiply any ${a} amount by ${formatRate(rateValue)} to get ${b}, or divide a ${b} amount by the same number to get ${a}. For example, 250 ${a} is about ${formatAmount(250 * rateValue)} ${b}, and 1,000 ${b} is about ${formatAmount(1000 * inv)} ${a}.`,
       ],
     });
+    const AMOUNTS = [1, 5, 10, 25, 50, 100, 160, 250, 500, 1000, 5000, 10000];
     table = {
-      title: `Common ${b} amounts converted to ${a}`,
+      title: `${a} to ${b} conversion table`,
+      head: [a, b],
+      rows: AMOUNTS.map((n) => [formatAmount(n), formatAmount(n * rateValue)]),
+    };
+    table2 = {
+      title: `${b} to ${a} conversion table`,
       head: [b, a],
       rows: [10, 100, 500, 1000, 5000, 10000, 50000].map((n) => [formatAmount(n), formatAmount(n * inv)]),
     };
@@ -69,15 +76,22 @@ async function buildTool(a, b) {
     ...base,
     sections,
     table,
+    table2,
     path: `/exchange-rate/${a.toLowerCase()}-to-${b.toLowerCase()}`,
     name: `${a} to ${b} Converter`,
-    title: `${a} to ${b} Converter – ${na} to ${nb}`,
-    description: `Convert ${na} (${a}) to ${nb} (${b}) with live exchange rates. ${rateText} Free ${a}/${b} calculator.`.slice(0, 160),
+    title: `${a} to ${b} – ${na} to ${nb} Converter & Live Rate`,
+    description: (rateValue
+      ? `${a} to ${b} today: 1 ${a} = ${formatRate(rateValue)} ${b}. Convert ${na} to ${nb} with a free live converter and amount table.`
+      : `Convert ${na} (${a}) to ${nb} (${b}) with live exchange rates. Free ${a}/${b} calculator.`).slice(0, 160),
     keywords: [`${a} to ${b}`, `${a.toLowerCase()} to ${b.toLowerCase()}`, `${na} to ${nb}`, `${a} ${b} exchange rate`, `convert ${a} to ${b}`],
     intro: `Convert ${na} (${a}) to ${nb} (${b}) instantly. ${rateText}`,
     steps: [`Enter the amount in ${a}.`, `Keep ${a} as From and ${b} as To, or swap them with ⇄.`, `Read the converted ${b} amount and the conversion table.`],
     faqs: [
       [`What is the ${a} to ${b} exchange rate today?`, `${rateText} Rates move daily, so check this page for the latest value.`],
+      ...(rateValue ? [
+        [`How much is 100 ${a} in ${b}?`, `At the latest rate, 100 ${a} is about ${formatAmount(100 * rateValue)} ${b}.`],
+        [`How much is 1,000 ${a} in ${b}?`, `At the latest rate, 1,000 ${a} is about ${formatAmount(1000 * rateValue)} ${b}.`],
+      ] : []),
       [`How do I convert ${a} to ${b}?`, `Multiply the ${a} amount by the current ${a}/${b} rate, or type the amount into the converter above and it does the maths for you.`],
       [`Why is the ${a} to ${b} rate at my bank different?`, 'Banks and exchange counters add a margin to the mid-market rate shown here and may charge a fee.'],
     ],

@@ -87,23 +87,23 @@ export default function ToolShell({ tool, children }) {
                   {(sec.after || []).map((para, i) => <p key={`a${i}`} className="mt-3">{para}</p>)}
                 </div>
               ))}
-              {tool.table && (
-                <div className="doc-block">
-                  <h2>{tool.table.title}</h2>
+              {[tool.table, tool.table2].filter(Boolean).map((tb) => (
+                <div key={tb.title} className="doc-block">
+                  <h2>{tb.title}</h2>
                   <div className="table-wrap">
                     <table>
                       <thead>
-                        <tr>{tool.table.head.map((h, i) => <th key={`${i}-${h}`} scope="col">{h}</th>)}</tr>
+                        <tr>{tb.head.map((h, i) => <th key={`${i}-${h}`} scope="col">{h}</th>)}</tr>
                       </thead>
                       <tbody>
-                        {tool.table.rows.map((row, r) => (
+                        {tb.rows.map((row, r) => (
                           <tr key={r}>{row.map((cell, c) => <td key={c}>{cell}</td>)}</tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
                 </div>
-              )}
+              ))}
             </section>
           )}
 
